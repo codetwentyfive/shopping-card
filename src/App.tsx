@@ -1,19 +1,18 @@
-import { Link } from "react-router-dom";
-import  Image  from "./pages/Fetch";
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+
 const App = () => {
   return (
-    <div>
-      <h1>Hello from the main page of the app!</h1>
-      <p>Here are some examples of links to other pages</p>
-      <nav>
-        <ul>
-          <li>
-            <Link to="profile">Profile page</Link>
-          </li>
-        </ul>
-      </nav>
-      <Image/>
-    </div>
+    <>
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <Home />
+        <Footer />
+      </div>
+    </>
   );
 };
 

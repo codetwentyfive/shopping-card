@@ -9,7 +9,6 @@ import "../app/globals.css";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <ModeToggle />
       <Router />
     </ThemeProvider>
   </React.StrictMode>
