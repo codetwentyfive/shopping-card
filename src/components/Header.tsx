@@ -5,7 +5,7 @@ import { ModeToggle } from "./mode-toggle";
 
 const Header: React.FC = () => {
   return (
-    <header className="bg-gray-800 text-white py-4">
+    <header className=" py-4">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="text-xl font-bold">
           Altan Uul
