@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import Modal from "../components/Modal";
-import { CardBody,CardContainer,CardItem } from "@/components/ui/3d-card";}
+import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 
 const Products = () => {
   const [products, setProducts] = useState<any[]>([]);
@@ -42,10 +42,19 @@ const Products = () => {
             id: 3,
             name: "Deel",
             description: "Brilliant silk Deel ",
-            size: "XL",
+            size: "S",
             price: "$9999",
             image:
               "https://www.mongolianz.com/wp-content/uploads/2021/01/138695842_482257773118595_8150043691993830142_n-510x765.jpg",
+          },
+          {
+            id: 4,
+            name: "Deel",
+            description: "Sable Fur & Cashmere Deel ",
+            size: "XL",
+            price: "$9999",
+            image:
+              "https://www.mongolianz.com/wp-content/uploads/2023/04/Mens-jacket-510x631.jpg",
           },
         ];
         setProducts(mockProducts);
@@ -113,31 +122,42 @@ const Products = () => {
     <Layout>
       <div className="container mx-auto py-8">
         <h1 className="text-3xl font-bold mb-4">Products</h1>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {products.map((product) => (
-            <div key={product.id} className=" p-4 shadow-md relative">
-              <h2 className="text-lg font-semibold mb-2">{product.name}</h2>
-              <img
-                src={product.image}
-                className="max-h-50  mb-4 object-cover cursor-pointer"
-                onClick={() => handleProductClick(product)}
-              />
-              <p className="text-gray-600 text-xs overflow-hidden h-20 mb-2">
-                {truncateDescription(product.description)}
-              </p>
-
-              <div className="flex items-center justify-between">
-                <p className="text-gray-700">
-                  {product.size && `Size: ${product.size}`}
-                </p>
-                <div className="">{product.price}</div>
-              </div>
-              <div className="">
-                <Link to={`/products/${product.id}`} className="text-blue-500">
-                  View Details
-                </Link>
-              </div>
-            </div>
+            <CardContainer
+              key={product.id}
+              className="  p-4 shadow-md relative inter-var"
+            >
+              <CardBody className="">
+                <CardItem translateZ="50" className="font-bold  ">
+                  <h2 className="text-lg font-semibold mb-2">{product.name}</h2>
+                </CardItem>
+                <img
+                  src={product.image}
+                  className=" max-h-100 w-auto mb-4 object-cover cursor-pointer"
+                  onClick={() => handleProductClick(product)}
+                />
+                <CardItem translateZ="60">
+                  <p className="text-gray-600 text-xs overflow-hidden h-10">
+                    {truncateDescription(product.description)}
+                  </p>
+                </CardItem>
+                <div className="flex items-center justify-between">
+                  <p className="text-gray-700">
+                    {product.size && `Size: ${product.size}`}
+                  </p>
+                  <div className="">{product.price}</div>
+                </div>
+                <div className="">
+                  <Link
+                    to={`/products/${product.id}`}
+                    className="text-blue-500"
+                  >
+                    View Details
+                  </Link>
+                </div>
+              </CardBody>
+            </CardContainer>
           ))}
         </div>
         {selectedProduct && (
