@@ -1,24 +1,30 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import Modal from "../components/Modal";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+  size?: string;
+  price: string;
+  image: string;
+}
+
 const Products = () => {
-  const [products, setProducts] = useState<any[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [sortBy, setSortBy] = useState<string>("name"); // Default sorting by name
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         // Simulating API call delay
         await new Promise((resolve) => setTimeout(resolve, 0));
-        const mockProducts = [
+        const mockProducts: Product[] = [
           {
             id: 1,
             name: "Tea Pot",
@@ -70,7 +76,7 @@ const Products = () => {
 
   const MAX_DESCRIPTION_LENGTH = 100; // Maximum number of characters for description
 
-  const truncateDescription = (description) => {
+  const truncateDescription = (description: string) => {
     if (description.length > MAX_DESCRIPTION_LENGTH) {
       const truncatedText = description.substring(0, MAX_DESCRIPTION_LENGTH);
       const lastSpaceIndex = truncatedText.lastIndexOf(" ");
@@ -79,35 +85,12 @@ const Products = () => {
     return description;
   };
 
-  useEffect(() => {
-    const filtered = products.filter((product) =>
-      product.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredProducts(filtered);
-  }, [products, searchQuery]);
-
-  const handleProductClick = (product) => {
+  const handleProductClick = (product: Product) => {
     setSelectedProduct(product);
   };
 
   const handleCloseModal = () => {
     setSelectedProduct(null);
-  };
-
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-  };
-
-  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortBy(e.target.value);
-  };
-
-  const sortProducts = (a: any, b: any) => {
-    if (sortBy === "name") {
-      return a.name.localeCompare(b.name);
-    } else if (sortBy === "size") {
-      return a.size.localeCompare(b.size);
-    }
   };
 
   if (loading) {
@@ -136,17 +119,20 @@ const Products = () => {
                   src={product.image}
                   className=" max-h-100 w-auto mb-4 object-cover cursor-pointer"
                   onClick={() => handleProductClick(product)}
+                  alt={product.name} 
                 />
                 <CardItem translateZ="60">
-                  <p className="text-gray-600 text-xs overflow-hidden h-10">
+                  <p className=" text-xs overflow-hidden h-10">
                     {truncateDescription(product.description)}
                   </p>
                 </CardItem>
                 <div className="flex items-center justify-between">
-                  <p className="text-gray-700">
+                  <CardItem translateZ="30" className="text-gray-700">
                     {product.size && `Size: ${product.size}`}
-                  </p>
-                  <div className="">{product.price}</div>
+                  </CardItem>
+                  <CardItem translateZ="40" className="">
+                    {product.price}
+                  </CardItem>
                 </div>
                 <div className="">
                   <Link

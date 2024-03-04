@@ -1,3 +1,4 @@
+/*
 import { useEffect, useState } from "react";
 const Image = () => {
     const [imageURL, setImageURL] = useState(null);
@@ -29,3 +30,4 @@ const Image = () => {
   };
 
 export default Image;
+*/
