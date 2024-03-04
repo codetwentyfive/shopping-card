@@ -1,5 +1,3 @@
-import React from "react";
-
 const Modal = ({ product, onClose }) => {
   const handleOutsideClick = (e) => {
     if (e.target === e.currentTarget) {

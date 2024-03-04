@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ThemeProvider } from "./theme-provider";
 import { ModeToggle } from "./mode-toggle";
 
-const Header: React.FC = () => {
+const Header= () => {
   return (
     <header className=" py-4">
       <div className="container mx-auto flex justify-between items-center">
@@ -21,7 +20,6 @@ const Header: React.FC = () => {
             <li>
               <ModeToggle />
             </li>
-            {/* Add more navigation links as needed */}
           </ul>
         </nav>
       </div>

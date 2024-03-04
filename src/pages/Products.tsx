@@ -21,14 +21,14 @@ const Products = () => {
           {
             id: 1,
             name: "Tea Pot",
-            description: "Tea Pot",
+            description: "Beautiful Mongolian Tea Pot made from ancient magic rock",
             price: "$50",
             image: "image1.jpg",
           },
           {
             id: 2,
             name: "Fishing Boots",
-            description: "Fishing Boots",
+            description: "Magical Fishing Boots guaranteed head tuner and success magnet",
             size: "L",
             price: "$250",
             image: "image2.jpg",
@@ -36,7 +36,7 @@ const Products = () => {
           {
             id: 3,
             name: "Deel",
-            description: "Deel",
+            description: "Brilliant silk Deel ",
             size: "XL",
             price: "$9999",
             image: "image3.jpg",
@@ -54,7 +54,6 @@ const Products = () => {
   }, []);
 
   useEffect(() => {
-    // Filter products based on search query
     const filtered = products.filter((product) =>
       product.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -101,13 +100,12 @@ const Products = () => {
           {products.map((product) => (
             <div key={product.id} className=" p-4 shadow-md relative">
               <h2 className="text-lg font-semibold mb-2">{product.name}</h2>
-              <p className="text-gray-600 mb-2">{product.description}</p>
               <img
                 src={product.image}
-                alt={product.name}
                 className="w-full h-auto mb-4"
                 onClick={() => handleProductClick(product)}
               />
+              <p className="text-gray-600  overflow-hidden h-16 mb-2">{product.description}</p>
 
               <div className="flex items-center justify-between">
                 <p className="text-gray-600">
