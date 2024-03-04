@@ -22,9 +22,10 @@ const Products = () => {
             id: 1,
             name: "Tea Pot",
             description:
-              "Beautiful Mongolian Tea Pot made from ancient magic rock",
+              "Beautiful Mongolian Tea Pot made from ancient magical copper and zinc",
             price: "$50",
-            image: "image1.jpg",
+            image:
+              "https://cdn.orientalartauctions.com/1ebc4537-a8c2-6d94-9f0c-0242ac1a0007/85629__w_2000.jpg",
           },
           {
             id: 2,
@@ -33,7 +34,8 @@ const Products = () => {
               "Magical Fishing Boots guaranteed head tuner and success magnet",
             size: "L",
             price: "$250",
-            image: "image2.jpg",
+            image:
+              "https://www.mongolianz.com/wp-content/uploads/2020/03/32-ugalztai-320-1-scaled.jpg",
           },
           {
             id: 3,
@@ -41,7 +43,8 @@ const Products = () => {
             description: "Brilliant silk Deel ",
             size: "XL",
             price: "$9999",
-            image: "image3.jpg",
+            image:
+              "https://www.mongolianz.com/wp-content/uploads/2021/01/138695842_482257773118595_8150043691993830142_n-510x765.jpg",
           },
         ];
         setProducts(mockProducts);
@@ -55,12 +58,12 @@ const Products = () => {
     fetchProducts();
   }, []);
 
-  const MAX_DESCRIPTION_LENGTH = 55; // Maximum number of characters for description
+  const MAX_DESCRIPTION_LENGTH = 100; // Maximum number of characters for description
 
   const truncateDescription = (description) => {
     if (description.length > MAX_DESCRIPTION_LENGTH) {
       const truncatedText = description.substring(0, MAX_DESCRIPTION_LENGTH);
-      const lastSpaceIndex = truncatedText.lastIndexOf(' ');
+      const lastSpaceIndex = truncatedText.lastIndexOf(" ");
       return `${truncatedText.substring(0, lastSpaceIndex)} ...`;
     }
     return description;
@@ -115,7 +118,7 @@ const Products = () => {
               <h2 className="text-lg font-semibold mb-2">{product.name}</h2>
               <img
                 src={product.image}
-                className="w-full h-auto mb-4"
+                className="max-h-400 w-auto mb-4 object-cover cursor-pointer"
                 onClick={() => handleProductClick(product)}
               />
               <p className="text-gray-600 text-xs overflow-hidden h-20 mb-2">
