@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
-import Modal from "./Modal";
+import Modal from "../components/Modal";
 
 const Products = () => {
   const [products, setProducts] = useState<any[]>([]);
@@ -118,7 +118,7 @@ const Products = () => {
               <h2 className="text-lg font-semibold mb-2">{product.name}</h2>
               <img
                 src={product.image}
-                className="max-h-400 w-auto mb-4 object-cover cursor-pointer"
+                className="max-h-50  mb-4 object-cover cursor-pointer"
                 onClick={() => handleProductClick(product)}
               />
               <p className="text-gray-600 text-xs overflow-hidden h-20 mb-2">
