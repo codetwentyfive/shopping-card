@@ -21,14 +21,16 @@ const Products = () => {
           {
             id: 1,
             name: "Tea Pot",
-            description: "Beautiful Mongolian Tea Pot made from ancient magic rock",
+            description:
+              "Beautiful Mongolian Tea Pot made from ancient magic rock",
             price: "$50",
             image: "image1.jpg",
           },
           {
             id: 2,
             name: "Fishing Boots",
-            description: "Magical Fishing Boots guaranteed head tuner and success magnet",
+            description:
+              "Magical Fishing Boots guaranteed head tuner and success magnet",
             size: "L",
             price: "$250",
             image: "image2.jpg",
@@ -52,6 +54,17 @@ const Products = () => {
 
     fetchProducts();
   }, []);
+
+  const MAX_DESCRIPTION_LENGTH = 55; // Maximum number of characters for description
+
+  const truncateDescription = (description) => {
+    if (description.length > MAX_DESCRIPTION_LENGTH) {
+      const truncatedText = description.substring(0, MAX_DESCRIPTION_LENGTH);
+      const lastSpaceIndex = truncatedText.lastIndexOf(' ');
+      return `${truncatedText.substring(0, lastSpaceIndex)} ...`;
+    }
+    return description;
+  };
 
   useEffect(() => {
     const filtered = products.filter((product) =>
@@ -96,7 +109,7 @@ const Products = () => {
     <Layout>
       <div className="container mx-auto py-8">
         <h1 className="text-3xl font-bold mb-4">Products</h1>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {products.map((product) => (
             <div key={product.id} className=" p-4 shadow-md relative">
               <h2 className="text-lg font-semibold mb-2">{product.name}</h2>
@@ -105,13 +118,15 @@ const Products = () => {
                 className="w-full h-auto mb-4"
                 onClick={() => handleProductClick(product)}
               />
-              <p className="text-gray-600  overflow-hidden h-16 mb-2">{product.description}</p>
+              <p className="text-gray-600 text-xs overflow-hidden h-20 mb-2">
+                {truncateDescription(product.description)}
+              </p>
 
               <div className="flex items-center justify-between">
-                <p className="text-gray-600">
+                <p className="text-gray-700">
                   {product.size && `Size: ${product.size}`}
                 </p>
-                <div className="text-gray-600">{product.price}</div>
+                <div className="">{product.price}</div>
               </div>
               <div className="">
                 <Link to={`/products/${product.id}`} className="text-blue-500">
