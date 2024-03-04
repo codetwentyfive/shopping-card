@@ -1,5 +1,18 @@
-const Modal = ({ product, onClose }) => {
-  const handleOutsideClick = (e) => {
+import React from "react";
+
+interface ModalProps {
+  product: {
+    image: string;
+    name: string;
+    description: string;
+    price: string;
+  };
+  onClose: () => void;
+}
+const Modal: React.FC<ModalProps> = ({ product, onClose }) => {
+  const handleOutsideClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
