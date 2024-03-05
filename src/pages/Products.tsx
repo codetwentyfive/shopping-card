@@ -105,7 +105,7 @@ const Products = () => {
     <Layout>
       <div className="container mx-auto py-8">
         <h1 className="text-3xl font-bold mb-4">Products</h1>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 md:grid-rows-2 gap-4">
           {products.map((product) => (
             <CardContainer
               key={product.id}
