@@ -20,32 +20,46 @@ const Products = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+  
   const [cart, setCart] = useState<{ product: Product; quantity: number }[]>(
     []
   );
 
   const addProductToCart = (product: Product, quantity: number) => {
-    const existingProductIndex = cart.findIndex(
+    const updatedCart = [...cart];
+    const existingProductIndex = updatedCart.findIndex(
       (item) => item.product.id === product.id
     );
+
     if (existingProductIndex !== -1) {
-      const updatedCart = [...cart];
+      // Update quantity and totalPrice of existing product
       updatedCart[existingProductIndex].quantity += quantity;
-      setCart(updatedCart);
+      updatedCart[existingProductIndex].product.totalPrice =
+        parseFloat(product.price) * updatedCart[existingProductIndex].quantity;
     } else {
-      setCart([...cart, { product, quantity }]);
+      // Add new product to cart
+      updatedCart.push({
+        product: {
+          ...product,
+          totalPrice: parseFloat(product.price) * quantity,
+        },
+        quantity,
+      });
     }
+
+    setCart(updatedCart);
   };
   const removeProduct = (id) => {
     setCart(cart.filter((item) => item.product.id !== id));
   };
   const getTotalItems = () => {
-    return cart.reduce((total, item) => total + item.quantity, 0);
+    return cart.reduce((total, item) => total + item.product.quantity, 0);
   };
 
   const getTotalPrice = () => {
     return cart.reduce(
-      (total, item) => total + parseFloat(item.product.price) * item.quantity,
+      (total, item) =>
+        total + item.product.quantity * parseFloat(item.product.price),
       0
     );
   };
@@ -128,7 +142,7 @@ const Products = () => {
                     {product.size && `Size: ${product.size}`}
                   </CardItem>
                   <CardItem translateZ="40" className="">
-                    {product.price}
+                    ${product.price}
                   </CardItem>
                 </div>
                 <div className="">
