@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import Modal from "../components/Modal";
+import Cart from "@/components/Cart";
+import { fetchProducts } from "@/data/ProductsData";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 
 interface Product {
@@ -18,60 +20,49 @@ const Products = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+  const [cart, setCart] = useState<{ product: Product; quantity: number }[]>(
+    []
+  );
+
+  const addProductToCart = (product: Product, quantity: number) => {
+    const existingProductIndex = cart.findIndex(
+      (item) => item.product.id === product.id
+    );
+    if (existingProductIndex !== -1) {
+      const updatedCart = [...cart];
+      updatedCart[existingProductIndex].quantity += quantity;
+      setCart(updatedCart);
+    } else {
+      setCart([...cart, { product, quantity }]);
+    }
+  };
+  const removeProduct = (id) => {
+    setCart(cart.filter((item) => item.product.id !== id));
+  };
+  const getTotalItems = () => {
+    return cart.reduce((total, item) => total + item.quantity, 0);
+  };
+
+  const getTotalPrice = () => {
+    return cart.reduce(
+      (total, item) => total + parseFloat(item.product.price) * item.quantity,
+      0
+    );
+  };
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchProductsData = async () => {
       try {
-        // Simulating API call delay
-        await new Promise((resolve) => setTimeout(resolve, 0));
-        const mockProducts: Product[] = [
-          {
-            id: 1,
-            name: "Tea Pot",
-            description:
-              "Beautiful Mongolian Tea Pot made from ancient magical copper and zinc",
-            price: "$50",
-            image:
-              "https://cdn.orientalartauctions.com/1ebc4537-a8c2-6d94-9f0c-0242ac1a0007/85629__w_2000.jpg",
-          },
-          {
-            id: 2,
-            name: "Fishing Boots",
-            description:
-              "Magical Fishing Boots guaranteed head tuner and success magnet",
-            size: "L",
-            price: "$250",
-            image:
-              "https://www.mongolianz.com/wp-content/uploads/2020/03/32-ugalztai-320-1-scaled.jpg",
-          },
-          {
-            id: 3,
-            name: "Deel",
-            description: "Brilliant silk Deel ",
-            size: "S",
-            price: "$9999",
-            image:
-              "https://www.mongolianz.com/wp-content/uploads/2021/01/138695842_482257773118595_8150043691993830142_n-510x765.jpg",
-          },
-          {
-            id: 4,
-            name: "Deel",
-            description: "Sable Fur & Cashmere Deel ",
-            size: "XL",
-            price: "$9999",
-            image:
-              "https://www.mongolianz.com/wp-content/uploads/2023/04/Mens-jacket-510x631.jpg",
-          },
-        ];
-        setProducts(mockProducts);
+        const data = await fetchProducts();
+        setProducts(data);
         setLoading(false);
       } catch (error) {
-        setError("Error fetching products. Please try again later.");
+        setError(error.message);
         setLoading(false);
       }
     };
 
-    fetchProducts();
+    fetchProductsData();
   }, []);
 
   const MAX_DESCRIPTION_LENGTH = 100; // Maximum number of characters for description
@@ -105,6 +96,12 @@ const Products = () => {
     <Layout>
       <div className="container mx-auto py-8">
         <h1 className="text-3xl font-bold mb-4">Products</h1>
+        <Cart
+          cart={cart}
+          totalItems={getTotalItems()}
+          totalPrice={getTotalPrice()}
+          removeProduct={removeProduct}
+        />
         <div className="grid grid-cols-2 md:grid-cols-4 md:grid-rows-2 gap-4">
           {products.map((product) => (
             <CardContainer
@@ -119,7 +116,7 @@ const Products = () => {
                   src={product.image}
                   className=" max-h-100 w-auto mb-4 object-cover cursor-pointer"
                   onClick={() => handleProductClick(product)}
-                  alt={product.name} 
+                  alt={product.name}
                 />
                 <CardItem translateZ="60">
                   <p className=" text-xs overflow-hidden h-10">
@@ -147,7 +144,11 @@ const Products = () => {
           ))}
         </div>
         {selectedProduct && (
-          <Modal product={selectedProduct} onClose={handleCloseModal} />
+          <Modal
+            product={selectedProduct}
+            onClose={handleCloseModal}
+            addProductToCart={addProductToCart}
+          />
         )}
       </div>
     </Layout>
