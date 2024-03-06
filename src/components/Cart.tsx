@@ -29,11 +29,12 @@ const Cart: React.FC<CartProps> = ({
         {cart.map(({ product, quantity }) => (
           <li key={product.id} className="mb-2">
             <span className="font-bold">{product.name}</span> -{" "}
-            <span className="text-gray-600">
-              {product.price}
-            </span>{" "}
-            x <span className="font-bold">{quantity}</span>
-            <button onClick={() => removeProduct(product.id)}>remove</button>
+            <span className="text-gray-600">${product.price}</span> x{" "}
+            <span className="font-bold"> {product.quantity}</span>{" "}
+            <button className="text-red-500 bg-white px-2 " onClick={() => removeProduct(product.id)}>
+              {" "}
+              remove
+            </button>
           </li>
         ))}
       </ul>
