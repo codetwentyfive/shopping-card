@@ -20,7 +20,7 @@ const Products = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
-  
+
   const [cart, setCart] = useState<{ product: Product; quantity: number }[]>(
     []
   );
@@ -116,11 +116,11 @@ const Products = () => {
           totalPrice={getTotalPrice()}
           removeProduct={removeProduct}
         />
-        <div className="grid grid-cols-2 md:grid-cols-4 md:grid-rows-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-4">
           {products.map((product) => (
             <CardContainer
               key={product.id}
-              className="  p-4 shadow-md relative inter-var"
+              className="  p-4 shadow-md relative "
             >
               <CardBody className="">
                 <CardItem translateZ="50" className="font-bold  ">
@@ -145,14 +145,17 @@ const Products = () => {
                     ${product.price}
                   </CardItem>
                 </div>
+                
+                {/* --for later reuse for product pages--
                 <div className="">
                   <Link
                     to={`/products/${product.id}`}
                     className="text-blue-500"
                   >
-                    View Details
+                  View Details
                   </Link>
                 </div>
+                */}
               </CardBody>
             </CardContainer>
           ))}
