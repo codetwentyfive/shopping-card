@@ -3,8 +3,10 @@ import React, { MouseEventHandler } from "react";
 interface Product {
   id: number;
   name: string;
-  price: number;
-  quantity: number;
+  description: string;
+  size?: string;
+  price: string;
+  image: string;
 }
 interface CartProps {
   cart: { product: Product; quantity: number }[];
@@ -31,11 +33,11 @@ const Cart: React.FC<CartProps> = ({
         Total Items: <span className="font-bold">{totalItems}</span>
       </p>
       <ul>
-        {cart.map(({ product }) => (
+        {cart.map(({ product,quantity }) => (
           <li key={product.id} className="text-black mb-2">
             <span className=" text-black font-bold">{product.name}</span> -{" "}
             <span className="text-black">${product.price}</span> x{" "}
-            <span className=" text-black font-bold"> {product.quantity}</span>{" "}
+            <span className=" text-black font-bold"> {quantity}</span>{" "}
             <button
               className="text-red-500  rounded-lg px-2  bpx-2 "
               onClick={() => removeProduct(product.id)}

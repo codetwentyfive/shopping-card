@@ -1,8 +1,15 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ModeToggle } from "./mode-toggle";
 import Cart from "./Cart";
-
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+  size?: string;
+  price: string;
+  image: string;
+}
 interface HeaderProps {
   cart: { product: Product; quantity: number }[];
   totalItems: number;
@@ -59,7 +66,7 @@ const Header = ({
                   </span>
                 )}
               </button>
-              
+
               {isCartOpen && (
                 <div className="z-10 absolute top-16 right-10 lg:right-80 shadow-lg rounded-lg">
                   <Cart

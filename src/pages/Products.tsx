@@ -13,11 +13,6 @@ interface Product {
   image: string;
 }
 
-interface CartItem {
-  product: Product;
-  quantity: number;
-}
-
 const Products = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -26,13 +21,12 @@ const Products = () => {
   const [cart, setCart] = useState<{ product: Product; quantity: number }[]>(
     []
   );
-
   const addProductToCart = (product: Product, quantity: number) => {
     const updatedCart = [...cart];
     const existingProductIndex = updatedCart.findIndex(
       (item) => item.product.id === product.id
     );
-  
+
     if (existingProductIndex !== -1) {
       // Increment quantity of existing product
       updatedCart[existingProductIndex].quantity += quantity;
@@ -43,12 +37,11 @@ const Products = () => {
         quantity,
       });
     }
-  
+
     setCart(updatedCart);
   };
 
-
-  const removeProduct = (id:number) => {
+  const removeProduct = (id: number) => {
     setCart(cart.filter((item) => item.product.id !== id));
   };
   const getTotalItems = () => {
@@ -57,8 +50,7 @@ const Products = () => {
 
   const getTotalPrice = () => {
     return cart.reduce(
-      (total, item) =>
-        total + item.quantity * parseFloat(item.product.price),
+      (total, item) => total + item.quantity * Number(item.product.price),
       0
     );
   };
@@ -70,7 +62,7 @@ const Products = () => {
         setProducts(data);
         setLoading(false);
       } catch (error) {
-        setError(error.message);
+        setError((error as Error).message);
         setLoading(false);
       }
     };
@@ -104,7 +96,7 @@ const Products = () => {
   if (error) {
     return <div>{error}</div>;
   }
-
+  console.log("cart data before passing to Layout:", cart);
   return (
     <Layout
       cart={cart}
@@ -161,9 +153,10 @@ const Products = () => {
         </div>
         {selectedProduct && (
           <Modal
+            cart={cart}
             product={selectedProduct}
-            onClose={handleCloseModal}
             addProductToCart={addProductToCart}
+            onClose={handleCloseModal}
           />
         )}
       </div>

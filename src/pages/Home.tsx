@@ -1,9 +1,26 @@
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
-
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+  size?: string;
+  price: string;
+  image: string;
+}
 const Home = () => {
+  const totalItems = 0;
+  const totalPrice = 0;
+  const removeProduct = () => {};
+  const cart: { product: Product; quantity: number }[] = [];
+
   return (
-    <Layout>
+    <Layout
+      cart={cart}
+      totalItems={totalItems}
+      totalPrice={totalPrice}
+      removeProduct={removeProduct}
+    >
       <div className="container mx-auto py-8">
         <h1 className="text-3xl font-bold mb-4">
           Welcome to our Mongolian Clothing Store

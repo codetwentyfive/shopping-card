@@ -1,14 +1,24 @@
 import React, { useState } from "react";
-
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+  size?: string;
+  price: string;
+  image: string;
+}
 interface ModalProps {
   product: {
+    id:number;
     image: string;
     name: string;
     description: string;
-    price: number;
+    price: string;
   };
+  cart: { product: Product; quantity: number }[];
+
   onClose: () => void;
-  addProductToCart: (product: any) => void;
+  addProductToCart: (product:Product, quantity: number) => void;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -31,16 +41,9 @@ const Modal: React.FC<ModalProps> = ({
   };
 
   const handleAddToCart = () => {
-    const updateQuantity = quantity + (product.quantity || 0);
-    const totalPrice = parseFloat(product.price) * quantity; // Calculate total price
-    const productWithQuantity = {
-      ...product,
-      quantity: updateQuantity,
-      totalPrice,
-    }; // Add quantity and total price to the product
-    addProductToCart(productWithQuantity);
+    console.log("HEEREEE",product)
+    addProductToCart(product, quantity); // Add product and quantity to the cart
     onClose(); // Close the modal after adding the product to the cart
-    console.log(productWithQuantity);
   };
 
   return (
