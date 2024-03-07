@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import Modal from "../components/Modal";
-import Cart from "@/components/Cart";
 import { fetchProducts } from "@/data/ProductsData";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 
@@ -15,12 +13,16 @@ interface Product {
   image: string;
 }
 
+interface CartItem {
+  product: Product;
+  quantity: number;
+}
+
 const Products = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
-
   const [cart, setCart] = useState<{ product: Product; quantity: number }[]>(
     []
   );
@@ -30,36 +32,33 @@ const Products = () => {
     const existingProductIndex = updatedCart.findIndex(
       (item) => item.product.id === product.id
     );
-
+  
     if (existingProductIndex !== -1) {
-      // Update quantity and totalPrice of existing product
+      // Increment quantity of existing product
       updatedCart[existingProductIndex].quantity += quantity;
-      updatedCart[existingProductIndex].product.totalPrice =
-        parseFloat(product.price) * updatedCart[existingProductIndex].quantity;
     } else {
       // Add new product to cart
       updatedCart.push({
-        product: {
-          ...product,
-          totalPrice: parseFloat(product.price) * quantity,
-        },
+        product,
         quantity,
       });
     }
-
+  
     setCart(updatedCart);
   };
-  const removeProduct = (id) => {
+
+
+  const removeProduct = (id:number) => {
     setCart(cart.filter((item) => item.product.id !== id));
   };
   const getTotalItems = () => {
-    return cart.reduce((total, item) => total + item.product.quantity, 0);
+    return cart.reduce((total, item) => total + item.quantity, 0);
   };
 
   const getTotalPrice = () => {
     return cart.reduce(
       (total, item) =>
-        total + item.product.quantity * parseFloat(item.product.price),
+        total + item.quantity * parseFloat(item.product.price),
       0
     );
   };
@@ -108,13 +107,14 @@ const Products = () => {
 
   return (
     <Layout
-    cart={cart}
+      cart={cart}
       totalItems={getTotalItems()}
       totalPrice={getTotalPrice()}
-      removeProduct={removeProduct}>
+      removeProduct={removeProduct}
+    >
       <div className="container mx-auto py-8">
         <h1 className="text-3xl z-0 font-bold mb-4">Products</h1>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-4">
           {products.map((product) => (
             <CardContainer
