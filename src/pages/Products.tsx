@@ -107,15 +107,14 @@ const Products = () => {
   }
 
   return (
-    <Layout>
+    <Layout
+    cart={cart}
+      totalItems={getTotalItems()}
+      totalPrice={getTotalPrice()}
+      removeProduct={removeProduct}>
       <div className="container mx-auto py-8">
-        <h1 className="text-3xl font-bold mb-4">Products</h1>
-        <Cart
-          cart={cart}
-          totalItems={getTotalItems()}
-          totalPrice={getTotalPrice()}
-          removeProduct={removeProduct}
-        />
+        <h1 className="text-3xl z-0 font-bold mb-4">Products</h1>
+        
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-4">
           {products.map((product) => (
             <CardContainer
@@ -145,7 +144,7 @@ const Products = () => {
                     ${product.price}
                   </CardItem>
                 </div>
-                
+
                 {/* --for later reuse for product pages--
                 <div className="">
                   <Link
