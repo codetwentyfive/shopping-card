@@ -20,26 +20,30 @@ const Cart: React.FC<CartProps> = ({
   removeProduct,
 }) => {
   return (
-    <div className="mb-4">
-      <h2 className="text-2xl font-bold mb-2">Shopping Cart</h2>
-      <p className="text-gray-600 mb-2">
+    <div className="border border-yellow-500 rounded-md backdrop-filter bg-white p-4 ">
+      <h2 className="text-black text-2xl font-bold mb-2">Shopping Cart</h2>
+      <p className=" text-black mb-2">
         Total Items: <span className="font-bold">{totalItems}</span>
       </p>
       <ul>
         {cart.map(({ product, quantity }) => (
-          <li key={product.id} className="mb-2">
-            <span className="font-bold">{product.name}</span> -{" "}
-            <span className="text-gray-600">${product.price}</span> x{" "}
-            <span className="font-bold"> {product.quantity}</span>{" "}
-            <button className="text-red-500 bg-white px-2 " onClick={() => removeProduct(product.id)}>
+          <li key={product.id} className="text-black mb-2">
+            <span className=" text-black font-bold">{product.name}</span> -{" "}
+            <span className="text-black">${product.price}</span> x{" "}
+            <span className=" text-black font-bold"> {product.quantity}</span>{" "}
+            <button
+              className="text-red-500  rounded-lg px-2  bpx-2 "
+              onClick={() => removeProduct(product.id)}
+            >
               {" "}
               remove
             </button>
           </li>
         ))}
       </ul>
-      <p className="text-gray-600 mt-4">
-        Total Price: <span className="font-bold">${totalPrice}</span>
+      <p className=" text-black mt-4">
+        Total Price ={" "}
+        <span className=" text-green-400 font-bold">${totalPrice}</span>
       </p>
     </div>
   );
