@@ -51,7 +51,7 @@ const Modal: React.FC<ModalProps> = ({
       className="text-black fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-60 z-50"
       onClick={handleOutsideClick}
     >
-      <div className="bg-white p-8 rounded-md max-w-full w-full md:max-w-md">
+      <div className="bg-white p-8 rounded-md w-full md:max-w-md">
         <button className="absolute top-2 right-2" onClick={onClose}>
           X
         </button>
