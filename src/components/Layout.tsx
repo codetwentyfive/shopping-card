@@ -23,16 +23,16 @@ const Layout: React.FC<LayoutProps> = ({
   totalPrice,
   removeProduct,
 }) => {
-  console.log('cart data received in Layout:', cart);
+  console.log("cart data received in Layout:", cart);
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className=" flex flex-col min-h-screen m-0 content-between">
       <Header
         cart={cart}
         totalItems={totalItems}
         totalPrice={totalPrice}
         removeProduct={removeProduct}
       />
-      <main className="">{children}</main>
+      <main className="flex-1">{children}</main>
       <Footer />
     </div>
   );
