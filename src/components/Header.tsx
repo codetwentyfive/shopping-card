@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ModeToggle } from "./mode-toggle";
 import Cart from "./Cart";
+import { useTheme } from "./theme-provider";
 interface Product {
   id: number;
   name: string;
@@ -24,27 +24,46 @@ const Header = ({
   removeProduct,
 }: HeaderProps) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const { theme } = useTheme();
+  const [systemTheme, setSystemTheme] = useState<"dark" | "light">("light");
 
   const toggleCart = () => {
     setIsCartOpen((prev) => !prev);
   };
 
+  useEffect(() => {
+    const systemThemePreference = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches
+      ? "dark"
+      : "light";
+    setSystemTheme(systemThemePreference);
+  }, []);
+
+
+  const getHeaderBgClass = (theme: string) => {
+    switch (theme) {
+      case "dark":
+        return "bg-black";
+      case "light":
+        return "bg-white"; 
+      default:
+        return systemTheme === "dark" ? "bg-black" : "bg-white";
+    }
+  };
   return (
-    <header className="py-4">
+    <header className={`py-3 sticky top-0 z-50  ${getHeaderBgClass(theme)}  `}>
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="text-lg pr-2 font-bold">
           Altan Uul
         </Link>
         <nav>
-          <ul className="flex space-x-4 items-center">
+          <ul className=" text-sm md:text-base flex space-x-4 items-center">
             <li>
               <Link to="/">Home</Link>
             </li>
             <li>
               <Link to="/products">Products</Link>
-            </li>
-            <li>
-              <ModeToggle />
             </li>
             <li>
               <button onClick={toggleCart} className="m-2">
@@ -68,7 +87,7 @@ const Header = ({
               </button>
 
               {isCartOpen && (
-                <div className="z-10 absolute top-16 right-10 lg:right-80 shadow-lg rounded-lg">
+                <div className="z-10 absolute bg-white-500 top-16 right-10 lg:right-80 shadow-lg rounded-lg">
                   <Cart
                     cart={cart}
                     totalItems={totalItems}
