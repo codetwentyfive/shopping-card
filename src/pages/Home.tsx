@@ -21,14 +21,12 @@ const Home = () => {
       totalPrice={totalPrice}
       removeProduct={removeProduct}
     >
-      <div className="container mx-auto py-8">
-        <h1 className="text-3xl font-bold mb-4">
-          Welcome to our Mongolian Clothing Store
-        </h1>
+      <div className=" container mx-auto py-8">
+        <h1 className="text-3xl font-bold mb-4">Welcome to Altan Uul</h1>
         <p className="text-lg mb-4">
-          Discover the beauty and elegance of traditional Mongolian clothing.
+          Discover the beauty and elegance of traditional Mongolia.
         </p>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-row-2 gap-4">
           <div className=" p-6 shadow-md">
             <h2 className="text-xl font-semibold mb-2">Men's Collection</h2>
             <p className="text-gray-600 mb-4">
