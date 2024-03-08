@@ -9,7 +9,7 @@ interface Product {
 }
 interface ModalProps {
   product: {
-    id:number;
+    id: number;
     image: string;
     name: string;
     description: string;
@@ -18,7 +18,7 @@ interface ModalProps {
   cart: { product: Product; quantity: number }[];
 
   onClose: () => void;
-  addProductToCart: (product:Product, quantity: number) => void;
+  addProductToCart: (product: Product, quantity: number) => void;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -41,7 +41,7 @@ const Modal: React.FC<ModalProps> = ({
   };
 
   const handleAddToCart = () => {
-    console.log("HEEREEE",product)
+    console.log("HEEREEE", product);
     addProductToCart(product, quantity); // Add product and quantity to the cart
     onClose(); // Close the modal after adding the product to the cart
   };
@@ -51,7 +51,7 @@ const Modal: React.FC<ModalProps> = ({
       className="text-black fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-60 z-50"
       onClick={handleOutsideClick}
     >
-      <div className="bg-white p-8 rounded-md w-full md:max-w-md">
+      <div className="bg-white p-8 rounded-md w-full md:max-w-md m-4 md:h-md">
         <button className="absolute top-2 right-2" onClick={onClose}>
           X
         </button>
@@ -59,7 +59,7 @@ const Modal: React.FC<ModalProps> = ({
           <img
             src={product.image}
             alt={product.name}
-            className="w-full md:w-48 h-auto object-contain mb-4 md:mb-0 pr-4"
+            className="w-40 md:w-48 h-auto object-contain mb-4 md:mb-0 pr-4"
           />
           <div>
             <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
