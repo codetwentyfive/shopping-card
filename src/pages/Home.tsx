@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
+import bgImage from "@/assets/bg-img.jpg";
+
 interface Product {
   id: number;
   name: string;
@@ -21,29 +23,29 @@ const Home = () => {
       totalPrice={totalPrice}
       removeProduct={removeProduct}
     >
-      <div className=" container mx-auto py-8">
+      <div className=" container mx-auto py-8 ">
         <h1 className="text-3xl font-bold mb-4">Welcome to Altan Uul</h1>
         <p className="text-lg mb-4">
           Discover the beauty and elegance of traditional Mongolia.
         </p>
-        <div className="grid grid-row-2 gap-4">
-          <div className=" p-6 shadow-md">
-            <h2 className="text-xl font-semibold mb-2">Men's Collection</h2>
-            <p className="text-gray-600 mb-4">
-              Explore our collection of traditional Mongolian clothing for men.
+        <div
+          className="h-[60vh] grid grid-row-2 gap-4 bg-cover bg-center bg-no-repeat md:bg-bottom "
+          style={{
+            backgroundImage: `url(${bgImage})`,
+          }}
+        >
+          <div className="self-center  p-6 shadow-2xl bg-transparent bg-white-500">
+            <h2 className=" text-white text-xl font-bold mb-2 ">
+              Collection 2024
+            </h2>
+            <p className="text-white mb-4">
+              Explore our collection for this season
             </p>
-            <Link to="/products?category=men" className="text-yellow-500">
-              Shop Men's Collection
-            </Link>
-          </div>
-          <div className=" p-6 shadow-md">
-            <h2 className="text-xl font-semibold mb-2">Women's Collection</h2>
-            <p className="text-gray-600 mb-4">
-              Discover our selection of elegant Mongolian dresses and
-              accessories for women.
-            </p>
-            <Link to="/products?category=women" className="text-yellow-500">
-              Shop Women's Collection
+            <Link
+              to="/products"
+              className="text-yellow-500 font-bold align-bottom"
+            >
+              Browse Collection
             </Link>
           </div>
         </div>
